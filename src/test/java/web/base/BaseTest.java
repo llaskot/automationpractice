@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.*;
 import web.common.CommonActions;
-import web.common.Config;
 import web.pages.authentication.AuthenticationPage;
 import web.pages.base.BasePage;
 import web.pages.home.HomePage;
@@ -23,7 +22,7 @@ public class BaseTest {
 
     @BeforeTest
     @Parameters({"browserName"})
-    public void browser(@Optional("mozilla") String browserName) {
+    public void selectBrowser(@Optional("mozilla") String browserName) {
         PLATFORM_AND_BROWSER = browserName;
         driver = CommonActions.createDriver();
         authenticationPage = new AuthenticationPage(driver);

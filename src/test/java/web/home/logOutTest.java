@@ -8,6 +8,7 @@ import web.base.BaseTest;
 import static web.constants.Constant.CheckingNames.USER_MAIL;
 import static web.constants.Constant.CheckingNames.USER_PASSWORD;
 import static web.constants.Constant.TimeoutVariable.EXPLICIT_SHORT_WAIT;
+import static web.constants.Constant.Urls.*;
 
 public class logOutTest extends BaseTest {
     private String userMai = USER_MAIL;
@@ -25,7 +26,7 @@ public class logOutTest extends BaseTest {
         }
     }
 
-    @Test(priority = 0)
+    @Test()
     public void logOutUI(){
         printTestStart();
         homePage.signOutBtnClick();
@@ -38,7 +39,7 @@ public class logOutTest extends BaseTest {
     public void logOutRef(){
         printTestStart();
 
-        basePage.open("http://automationpractice.com/index.php?mylogout=");
+        basePage.open(DOMAIN_URL+LOGOUT_ENDPOINT);
         Assert.assertTrue(homePage.waitTillSignOutBtnDisappear(EXPLICIT_SHORT_WAIT));
         System.out.println("OK - Log Out is complete ");
 

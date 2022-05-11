@@ -10,12 +10,12 @@ public class Constant {
 
     }
 
-    public static class UserData {
 
-    }
 
     public static class Urls {
         public static final String DOMAIN_URL = "http://automationpractice.com/index.php";
+        public static final String LOGOUT_ENDPOINT = "?mylogout=";
+
     }
 
     public static class CheckingNames {
@@ -23,7 +23,5 @@ public class Constant {
         public static final String USER_PASSWORD = "11111";
     }
 
-    public static class Files {
 
-    }
 }
