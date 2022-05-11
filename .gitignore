@@ -22,3 +22,10 @@ buildNumber.properties
 .idea/vcs.xml
 *.json
 .idea/runConfigurations.xml
+*.jar
+*.bat
+*.yml
+*.properties
+*.js
+*.svg
+*.css

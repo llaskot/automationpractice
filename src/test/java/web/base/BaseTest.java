@@ -3,10 +3,9 @@ package web.base;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 import web.common.CommonActions;
+import web.common.Config;
 import web.pages.authentication.AuthenticationPage;
 import web.pages.base.BasePage;
 import web.pages.home.HomePage;
@@ -16,51 +15,57 @@ import static web.constants.Constant.Urls.DOMAIN_URL;
 
 
 public class BaseTest {
+    protected static WebDriver driver;
+    protected Actions builder;
+    protected BasePage basePage;
+    protected HomePage homePage;
+    protected AuthenticationPage authenticationPage;
 
-    protected static WebDriver driver = CommonActions.createDriver();
-    protected Actions builder = new Actions(driver);
-    protected BasePage basePage = new BasePage(driver);
-    protected HomePage homePage = new HomePage(driver);
-    protected AuthenticationPage authenticationPage = new AuthenticationPage(driver);
+    @BeforeTest
+    @Parameters({"browserName"})
+    public void browser(@Optional("mozilla") String browserName) {
+        PLATFORM_AND_BROWSER = browserName;
+        driver = CommonActions.createDriver();
+        authenticationPage = new AuthenticationPage(driver);
+        homePage = new HomePage(driver);
+        basePage = new BasePage(driver);
+        builder = new Actions(driver);
+        basePage.open(DOMAIN_URL);
 
-    public void pause(int time)
-    {   System.out.println("Pause - "+time/1000+" sek");
+    }
+
+
+    public void pause(int time) {
+        System.out.println("Pause - " + time / 1000 + " sek");
         builder.pause(time).perform();
     }
 
 
-
-    public void printTestStart(){
-        System.out.println("\n"+Thread.currentThread().getStackTrace()[2].getMethodName()+" - starts!\n" +
+    public void printTestStart() {
+        System.out.println("\n" + Thread.currentThread().getStackTrace()[2].getMethodName() + " - starts!\n" +
                 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
     }
 
-    public void printTestFinish(){
-        System.out.println("\n" + Thread.currentThread().getStackTrace()[2].getMethodName()+" - Finished!\n"+
+    public void printTestFinish() {
+        System.out.println("\n" + Thread.currentThread().getStackTrace()[2].getMethodName() + " - Finished!\n" +
                 "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
     }
 
-    @BeforeSuite
-    public void getDomainUrl(){
-        basePage.open(DOMAIN_URL);
-    }
 
     @AfterTest
-    public void clearCookiesAndLocalStorage(){
-        if(CLEAN_COOKIES_AND_STORAGE) {
+    public void clearCookiesAndLocalStorage() {
+        if (CLEAN_COOKIES_AND_STORAGE) {
             JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
             driver.manage().deleteAllCookies();
             javascriptExecutor.executeScript("window.sessionStorage.clear()");
             System.out.println("AfterTest");
+            if (HOLD_BROWSER_OPEN) {
+                System.out.println("AfterSuite");
+                driver.quit();
+            }
         }
-    }
 
-    @AfterSuite(alwaysRun = true)
-    public void close(){
-        if(HOLD_BROWSER_OPEN){
-            System.out.println("AfterSuite");
-            driver.quit();
-        }
+
     }
 
 }

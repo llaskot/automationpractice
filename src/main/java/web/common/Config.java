@@ -1,7 +1,11 @@
 package web.common;
 
+import org.testng.annotations.Parameters;
+
+
 public class Config {
-    public static final String PLATFORM_AND_BROWSER = "win_chrome";
+
+    public static   String PLATFORM_AND_BROWSER = "chrome" ;
 
     /**
      * Clear cookies and storage after each iteration

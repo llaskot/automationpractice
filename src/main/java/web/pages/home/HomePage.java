@@ -28,7 +28,6 @@ public class HomePage extends BasePage {
     private static final By userInfo = By.xpath("//div[@class='header-container']//nav//a");
     public boolean signedOut(){
         List<WebElement> userInfoCont = driver.findElements(userInfo);
-        System.out.println("ELEMENTS a  "+ userInfoCont.size());
         if(userInfoCont.size()<3) {
             return true;
         }else return false;
